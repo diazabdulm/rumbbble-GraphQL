@@ -1,0 +1,25 @@
+{
+  "name": "rumbbble-graphql",
+  "version": "1.0.0",
+  "description": "The rumbbble project, built with a GraphQL backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm start --prefix client\"",
+    "postinstall": "npm install --prefix server && npm install --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diazabdulm/rumbbble-GraphQL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diazabdulm/rumbbble-GraphQL/issues"
+  },
+  "homepage": "https://github.com/diazabdulm/rumbbble-GraphQL#readme",
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  },
+  "dependencies": {}
+}
