@@ -141,10 +141,96 @@ const query = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: () => ({
-    hello: {
-      type: GraphQLString,
-      resolve() {
-        return "hello";
+    addPost: {
+      type: PostType,
+      args: {
+        title: { type: GraphQLNonNull(GraphQLString) },
+        description: { type: GraphQLNonNull(GraphQLString) },
+        repoURL: { type: GraphQLNonNull(GraphQLString) },
+        websiteURL: { type: GraphQLNonNull(GraphQLString) },
+        coverPhotoURL: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parentValue, arguments, request) {
+        return Post.create({ ...arguments, author: request.user.id });
+      },
+    },
+    updatePost: {
+      type: PostType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        title: { type: GraphQLString },
+        description: { type: GraphQLString },
+        repoURL: { type: GraphQLString },
+        websiteURL: { type: GraphQLString },
+        coverPhotoURL: { type: GraphQLString },
+      },
+      resolve(parentValue, arguments, request) {
+        const { id, ...restArguments } = arguments;
+        return Post.findByIdAndUpdate(id, { ...restArguments }, { new: true });
+      },
+    },
+    deletePost: {
+      type: PostType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, arguments, request) {
+        const { id } = arguments;
+        Comment.find({ post: id }).remove();
+        Like.find({ post: id }).remove();
+        return Post.findByIdAndDelete(id);
+      },
+    },
+    addComment: {
+      type: CommentType,
+      args: {
+        content: { type: GraphQLNonNull(GraphQLString) },
+        post: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, arguments, request) {
+        return Comment.create({ ...arguments, author: request.user.id });
+      },
+    },
+    updateComment: {
+      type: CommentType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        content: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parentValue, arguments, request) {
+        const { id, ...restArguments } = arguments;
+        return Comment.findByIdAndUpdate(
+          id,
+          { ...restArguments },
+          { new: true }
+        );
+      },
+    },
+    deleteComment: {
+      type: CommentType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, arguments, request) {
+        return Comment.findByIdAndDelete(arguments.id);
+      },
+    },
+    addLike: {
+      type: LikeType,
+      args: {
+        post: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, arguments, request) {
+        return Like.create({ ...arguments, author: request.user.id });
+      },
+    },
+    deleteLike: {
+      type: LikeType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parentValue, arguments, request) {
+        return Like.findByIdAndDelete(arguments.id);
       },
     },
   }),
