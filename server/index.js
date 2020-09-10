@@ -6,7 +6,7 @@ const compression = require("compression");
 const enforce = require("express-sslify");
 const { graphqlHTTP } = require("express-graphql");
 
-const app = express();
+const server = express();
 const schema = require("./schema");
 const authRouter = require("./routes/auth");
 
@@ -37,11 +37,11 @@ server.use(
 );
 
 if (process.env.NODE_ENV === "production") {
-  app.use(compression());
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
-  app.use(express.static(path.join(__dirname, "client/build")));
+  server.use(compression());
+  server.use(enforce.HTTPS({ trustProtoHeader: true }));
+  server.use(express.static(path.join(__dirname, "client/build")));
 
-  app.get("*", (request, response) => {
+  server.get("*", (request, response) => {
     response.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
