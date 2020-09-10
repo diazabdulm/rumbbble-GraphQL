@@ -11,4 +11,4 @@ const Like = new Schema({
   },
 });
 
-model("likes", Like);
+module.exports = model("likes", Like);

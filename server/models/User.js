@@ -3,10 +3,10 @@ const { Schema, model } = require("mongoose");
 const User = new Schema({
   name: String,
   location: String,
-  profilePicture: String,
+  avatarURL: String,
   bio: String,
   githubID: Number,
   githubUsername: String,
 });
 
-model("users", User);
+module.exports = model("users", User);
