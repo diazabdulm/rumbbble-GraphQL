@@ -3,9 +3,9 @@ import { Switch, Route } from "react-router-dom";
 
 import Header from "components/Header";
 
-import PostList from "pages/PostList";
-import PostDetail from "pages/PostDetail";
-import PostCreate from "pages/PostCreate";
+import PostList from "components/PostList";
+import PostDetail from "components/PostDetail";
+import PostCreate from "components/PostCreate";
 
 function App() {
   return (
