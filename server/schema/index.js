@@ -2,6 +2,7 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLNonNull,
+  GraphQLList,
   GraphQLString,
   GraphQLInt,
   GraphQLID,
@@ -24,13 +25,13 @@ const UserType = new GraphQLObjectType({
     githubUsername: { type: GraphQLString },
     posts: {
       type: PostType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return Post.find({ author: parentValue.id });
       },
     },
     comments: {
       type: CommentType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return Comment.find({ author: parentValue.id });
       },
     },
@@ -48,19 +49,19 @@ const PostType = new GraphQLObjectType({
     coverPhotoURL: { type: GraphQLString },
     author: {
       type: UserType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return User.findById(parentValue.author);
       },
     },
     comments: {
       type: CommentType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return Comment.find({ post: parentValue.id });
       },
     },
     numLikes: {
-      type: LikeType,
-      resolve(parentValue, arguments, request) {
+      type: GraphQLInt,
+      resolve(parentValue, args, request) {
         return Like.find({ post: parentValue.id }).countDocuments();
       },
     },
@@ -74,13 +75,13 @@ const CommentType = new GraphQLObjectType({
     content: { type: GraphQLString },
     post: {
       type: PostType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return Post.findById(parentValue.post);
       },
     },
     author: {
       type: UserType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return User.findById(parentValue.author);
       },
     },
@@ -92,13 +93,13 @@ const LikeType = new GraphQLObjectType({
   fields: () => ({
     post: {
       type: PostType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return Post.findById(parentValue.post);
       },
     },
     author: {
       type: UserType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return User.findById(parentValue.author);
       },
     },
@@ -108,31 +109,37 @@ const LikeType = new GraphQLObjectType({
 const query = new GraphQLObjectType({
   name: "Query",
   fields: () => ({
-    currentUser: {
+    user: {
       type: UserType,
-      resolve(parentValue, arguments, request) {
+      resolve(parentValue, args, request) {
         return request.user;
+      },
+    },
+    posts: {
+      type: GraphQLList(PostType),
+      resolve(parentValue, args, request) {
+        return Post.find().limit(20).sort({ _id: -1 }).exec();
       },
     },
     post: {
       type: PostType,
       args: { id: { type: GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, arguments, request) {
-        return Post.findById(arguments.id);
+      resolve(parentValue, args, request) {
+        return Post.findById(args.id);
       },
     },
     comment: {
       type: CommentType,
       args: { id: { type: GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, arguments, request) {
-        return Comment.findById(arguments.id);
+      resolve(parentValue, args, request) {
+        return Comment.findById(args.id);
       },
     },
     like: {
       type: LikeType,
       args: { id: { type: GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, arguments, request) {
-        return Like.findById(arguments.id);
+      resolve(parentValue, args, request) {
+        return Like.findById(args.id);
       },
     },
   }),
@@ -141,7 +148,7 @@ const query = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: () => ({
-    addPost: {
+    createPost: {
       type: PostType,
       args: {
         title: { type: GraphQLNonNull(GraphQLString) },
@@ -150,8 +157,8 @@ const mutation = new GraphQLObjectType({
         websiteURL: { type: GraphQLNonNull(GraphQLString) },
         coverPhotoURL: { type: GraphQLNonNull(GraphQLString) },
       },
-      resolve(parentValue, arguments, request) {
-        return Post.create({ ...arguments, author: request.user.id });
+      resolve(parentValue, args, request) {
+        return Post.create({ ...args, author: request.user.id });
       },
     },
     updatePost: {
@@ -164,9 +171,9 @@ const mutation = new GraphQLObjectType({
         websiteURL: { type: GraphQLString },
         coverPhotoURL: { type: GraphQLString },
       },
-      resolve(parentValue, arguments, request) {
-        const { id, ...restArguments } = arguments;
-        return Post.findByIdAndUpdate(id, { ...restArguments }, { new: true });
+      resolve(parentValue, args, request) {
+        const { id, ...restargs } = args;
+        return Post.findByIdAndUpdate(id, { ...restargs }, { new: true });
       },
     },
     deletePost: {
@@ -174,21 +181,21 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parentValue, arguments, request) {
-        const { id } = arguments;
+      resolve(parentValue, args, request) {
+        const { id } = args;
         Comment.find({ post: id }).remove();
         Like.find({ post: id }).remove();
         return Post.findByIdAndDelete(id);
       },
     },
-    addComment: {
+    createComment: {
       type: CommentType,
       args: {
         content: { type: GraphQLNonNull(GraphQLString) },
         post: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parentValue, arguments, request) {
-        return Comment.create({ ...arguments, author: request.user.id });
+      resolve(parentValue, args, request) {
+        return Comment.create({ ...args, author: request.user.id });
       },
     },
     updateComment: {
@@ -197,13 +204,9 @@ const mutation = new GraphQLObjectType({
         id: { type: GraphQLNonNull(GraphQLID) },
         content: { type: GraphQLNonNull(GraphQLString) },
       },
-      resolve(parentValue, arguments, request) {
-        const { id, ...restArguments } = arguments;
-        return Comment.findByIdAndUpdate(
-          id,
-          { ...restArguments },
-          { new: true }
-        );
+      resolve(parentValue, args, request) {
+        const { id, ...restargs } = args;
+        return Comment.findByIdAndUpdate(id, { ...restargs }, { new: true });
       },
     },
     deleteComment: {
@@ -211,17 +214,17 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parentValue, arguments, request) {
-        return Comment.findByIdAndDelete(arguments.id);
+      resolve(parentValue, args, request) {
+        return Comment.findByIdAndDelete(args.id);
       },
     },
-    addLike: {
+    createLike: {
       type: LikeType,
       args: {
         post: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parentValue, arguments, request) {
-        return Like.create({ ...arguments, author: request.user.id });
+      resolve(parentValue, args, request) {
+        return Like.create({ ...args, author: request.user.id });
       },
     },
     deleteLike: {
@@ -229,8 +232,8 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parentValue, arguments, request) {
-        return Like.findByIdAndDelete(arguments.id);
+      resolve(parentValue, args, request) {
+        return Like.findByIdAndDelete(args.id);
       },
     },
   }),
