@@ -17,7 +17,7 @@ function PostList() {
         <img src={post.author.avatarURL} alt="" />
         <p>{post.author.name}</p>
       </div>
-      <button></button>
+      <button>Upvote</button>
       <span>{post.numLikes}</span>
     </article>
   ));
