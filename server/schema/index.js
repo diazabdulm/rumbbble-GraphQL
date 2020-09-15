@@ -115,12 +115,6 @@ const query = new GraphQLObjectType({
         return request.user;
       },
     },
-    posts: {
-      type: GraphQLList(PostType),
-      resolve(parentValue, args, request) {
-        return Post.find().limit(20).sort({ _id: -1 }).exec();
-      },
-    },
     post: {
       type: PostType,
       args: { id: { type: GraphQLNonNull(GraphQLID) } },
@@ -128,11 +122,24 @@ const query = new GraphQLObjectType({
         return Post.findById(args.id);
       },
     },
+    posts: {
+      type: GraphQLList(PostType),
+      resolve(parentValue, args, request) {
+        return Post.find().limit(20).sort({ _id: -1 }).exec();
+      },
+    },
     comment: {
       type: CommentType,
       args: { id: { type: GraphQLNonNull(GraphQLID) } },
       resolve(parentValue, args, request) {
         return Comment.findById(args.id);
+      },
+    },
+    comments: {
+      type: GraphQLList(CommentType),
+      args: { post: { type: GraphQLNonNull(GraphQLID) } },
+      resolve(parentValue, args, request) {
+        return Comment.find({ post: args.post });
       },
     },
     like: {

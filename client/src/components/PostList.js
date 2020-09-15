@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 
-import { GET_POSTS } from "actions/postActions";
 import PostListItem from "components/PostListItem";
+import { GET_POSTS } from "actions/postActions";
 
 function PostList() {
   const { loading, error, data } = useQuery(GET_POSTS);
