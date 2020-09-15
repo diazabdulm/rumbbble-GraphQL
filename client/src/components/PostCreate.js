@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import { GET_POSTS, CREATE_POST } from "actions/postActions";
+import { CREATE_POST, GET_POSTS } from "actions/postActions";
 
 const FORM_FIELDS = [
   { id: 0, name: "title" },
@@ -21,7 +21,8 @@ function PostCreate({ history }) {
     setPostDetails({ ...postDetails, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     createPost({ variables: postDetails });
     history.push("/");
   };

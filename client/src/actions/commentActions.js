@@ -13,3 +13,11 @@ export const GET_COMMENTS = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT = gql`
+  mutation CreateComment($content: String!, $post: ID!) {
+    createComment(content: $content, post: $post) {
+      id
+    }
+  }
+`;

@@ -1,7 +1,9 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 
-import CommentList from "./CommentList";
+import CommentList from "components/CommentList";
+import CommentCreate from "components/CommentCreate";
+
 import { GET_POST } from "actions/postActions";
 
 function PostDetail({ match }) {
@@ -22,6 +24,7 @@ function PostDetail({ match }) {
       <a href={post.repoURL}>Visit repository</a>
       <a href={post.websiteURL}>Visit website</a>
       <CommentList post={post.id} />
+      <CommentCreate post={post.id} />
     </article>
   );
 }
