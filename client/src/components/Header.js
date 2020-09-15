@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
 import { GET_USER } from "actions/userActions";
@@ -16,7 +17,7 @@ function Header() {
       <a href="#0">
         <img src="#" alt="" />
       </a>
-      <a href="#0">Upload</a>
+      <Link to="/posts/new">Create Post</Link>
     </Fragment>
   );
 
