@@ -7,7 +7,19 @@ function PostListItem(props) {
   const [likePost] = useMutation(LIKE_POST);
 
   const handleClick = () => {
-    likePost({ variables: { post: props.id } });
+    likePost({
+      variables: { post: props.id },
+      optimisticResponse: {
+        __typename: "Mutation",
+        createLike: {
+          post: {
+            __typename: "Post",
+            id: props.id,
+            numLikes: props.numLikes + 1,
+          },
+        },
+      },
+    });
   };
 
   return (
