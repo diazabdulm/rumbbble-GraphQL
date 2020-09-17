@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
+import withRequireAuth from "./RequireAuth";
 import { CREATE_POST, GET_POSTS } from "actions/postActions";
 
 const FORM_FIELDS = [
@@ -11,7 +12,7 @@ const FORM_FIELDS = [
   { id: 4, name: "coverPhotoURL" },
 ];
 
-function PostCreate({ history }) {
+function PostCreate(props) {
   const [createPost] = useMutation(CREATE_POST, {
     refetchQueries: [{ query: GET_POSTS }],
   });
@@ -24,7 +25,7 @@ function PostCreate({ history }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     createPost({ variables: postDetails });
-    history.push("/");
+    // history.push("/");
   };
 
   const renderFields = FORM_FIELDS.map(({ id, name }) => (
@@ -39,4 +40,4 @@ function PostCreate({ history }) {
   );
 }
 
-export default PostCreate;
+export default withRequireAuth(PostCreate);
