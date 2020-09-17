@@ -10,8 +10,6 @@ function Header() {
   if (loading) return null;
   if (error) throw Error(error.message);
 
-  const { user } = data;
-
   const renderLoggedIn = (
     <Fragment>
       <a href="#0">
@@ -23,7 +21,7 @@ function Header() {
 
   const renderLoggedOut = <a href="/auth/github">Sign in with GitHub</a>;
 
-  return <header>{user ? renderLoggedIn : renderLoggedOut}</header>;
+  return <header>{data.user ? renderLoggedIn : renderLoggedOut}</header>;
 }
 
 export default Header;
