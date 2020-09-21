@@ -16,6 +16,7 @@ function Header() {
         <img src="#" alt="" />
       </a>
       <Link to="/posts/new">Create Post</Link>
+      <a href="/auth/logout">Log Out</a>
     </Fragment>
   );
 
