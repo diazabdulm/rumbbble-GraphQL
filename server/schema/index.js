@@ -7,6 +7,7 @@ const {
   GraphQLInt,
   GraphQLID,
 } = require("graphql");
+const { GraphQLUpload } = require("graphql-upload");
 
 const User = require("../models/User");
 const Post = require("../models/Post");
@@ -46,7 +47,7 @@ const PostType = new GraphQLObjectType({
     description: { type: GraphQLString },
     repoURL: { type: GraphQLString },
     websiteURL: { type: GraphQLString },
-    coverPhotoURL: { type: GraphQLString },
+    coverPhoto: { type: GraphQLString },
     author: {
       type: UserType,
       resolve(parentValue, args, request) {
@@ -162,10 +163,11 @@ const mutation = new GraphQLObjectType({
         description: { type: GraphQLNonNull(GraphQLString) },
         repoURL: { type: GraphQLNonNull(GraphQLString) },
         websiteURL: { type: GraphQLNonNull(GraphQLString) },
-        coverPhotoURL: { type: GraphQLNonNull(GraphQLString) },
+        coverPhoto: { type: GraphQLNonNull(GraphQLUpload) },
       },
       resolve(parentValue, args, request) {
-        return Post.create({ ...args, author: request.user.id });
+        console.log(args);
+        // return Post.create({ ...args, author: request.user.id });
       },
     },
     updatePost: {
@@ -176,7 +178,7 @@ const mutation = new GraphQLObjectType({
         description: { type: GraphQLString },
         repoURL: { type: GraphQLString },
         websiteURL: { type: GraphQLString },
-        coverPhotoURL: { type: GraphQLString },
+        coverPhoto: { type: GraphQLString },
       },
       resolve(parentValue, args, request) {
         const { id, ...restargs } = args;

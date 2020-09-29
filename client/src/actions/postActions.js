@@ -5,7 +5,7 @@ export const GET_POSTS = gql`
     posts {
       id
       title
-      coverPhotoURL
+      coverPhoto
       numLikes
       author {
         id
@@ -24,7 +24,7 @@ export const GET_POST = gql`
       description
       repoURL
       websiteURL
-      coverPhotoURL
+      coverPhoto
       numLikes
     }
   }
@@ -36,14 +36,14 @@ export const CREATE_POST = gql`
     $description: String!
     $repoURL: String!
     $websiteURL: String!
-    $coverPhotoURL: String!
+    $coverPhoto: Upload!
   ) {
     createPost(
       title: $title
       description: $description
       repoURL: $repoURL
       websiteURL: $websiteURL
-      coverPhotoURL: $coverPhotoURL
+      coverPhoto: $coverPhoto
     ) {
       id
     }

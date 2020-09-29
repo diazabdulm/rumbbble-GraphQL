@@ -18,7 +18,7 @@ function PostDetail({ match }) {
 
   return (
     <article>
-      <img src={post.coverPhotoURL} alt="" />
+      <img src={post.coverPhoto} alt="" />
       <h1>{post.title}</h1>
       <p>{post.description}</p>
       <a href={post.repoURL}>Visit repository</a>

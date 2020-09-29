@@ -12,27 +12,30 @@ const FORM_TEXT_FIELDS = [
 ];
 
 function PostCreate(props) {
+  const [coverPhoto, setCoverPhoto] = useState();
+  const [postDetails, setPostDetails] = useState({});
   const [createPost] = useMutation(CREATE_POST, {
     refetchQueries: [{ query: GET_POSTS }],
   });
-  const [file, setFile] = useState();
-  const [postDetails, setPostDetails] = useState({});
 
   const handleChange = (event) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
     setPostDetails({ ...postDetails, [name]: value });
   };
 
   const handleFileChange = (event) => {
-    const [fileDetails] = event.target.files;
-    // console.log(fileDetails);
-    console.log('event.target.files', event.target.files)
-  }
+    const {
+      target: { validity },
+    } = event;
+    if (!validity.valid) throw Error("file not valid");
+    setCoverPhoto(event.target.files[0]);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createPost({ variables: postDetails });
-    // history.push("/");
+    createPost({ variables: { ...postDetails, coverPhoto } });
   };
 
   const renderTextFields = FORM_TEXT_FIELDS.map(({ id, name }) => (
@@ -42,7 +45,13 @@ function PostCreate(props) {
   return (
     <form encType="multipart/form-data" onSubmit={handleSubmit}>
       {renderTextFields}
-      <input required type="file" name="coverPhoto" accept="image/*" onChange={handleFileChange} />
+      <input
+        required
+        type="file"
+        name="coverPhoto"
+        accept="image/*"
+        onChange={handleFileChange}
+      />
       <button type="submit">Create New Post</button>
     </form>
   );

@@ -5,7 +5,7 @@ const Post = new Schema({
   description: String,
   repoURL: String,
   websiteURL: String,
-  coverPhotoURL: String,
+  coverPhoto: String,
   author: {
     type: Schema.Types.ObjectId,
     ref: "users",
