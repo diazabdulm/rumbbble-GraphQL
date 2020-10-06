@@ -13,6 +13,7 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
 const Like = require("../models/Like");
+const { saveToCloudinary } = require("../services/cloudinary");
 
 const UserType = new GraphQLObjectType({
   name: "User",
@@ -165,8 +166,16 @@ const mutation = new GraphQLObjectType({
         websiteURL: { type: GraphQLNonNull(GraphQLString) },
         coverPhoto: { type: GraphQLNonNull(GraphQLUpload) },
       },
-      resolve(parentValue, args, request) {
-        console.log(args);
+      async resolve(parentValue, args, request) {
+        const { createReadStream } = await args.coverPhoto;
+        const coverPhotoStream = createReadStream();
+        const fileURL = await saveToCloudinary(coverPhotoStream);
+        console.log("fileURL", fileURL);
+        // console.log("args", args);
+        // console.log("request", request);
+        // const stream = await args.coverPhoto;
+        // console.log("args.stream", args.stream);
+        // console.log("stream", stream);
         // return Post.create({ ...args, author: request.user.id });
       },
     },
