@@ -11,11 +11,12 @@ const FORM_TEXT_FIELDS = [
   { id: 3, name: "websiteURL" },
 ];
 
-function PostCreate() {
+function PostCreate({ history }) {
   const [coverPhoto, setCoverPhoto] = useState();
   const [postDetails, setPostDetails] = useState({});
   const [createPost] = useMutation(CREATE_POST, {
     refetchQueries: [{ query: GET_POSTS }],
+    onCompleted: () => history.push("/"),
   });
 
   const handleChange = (event) => {
