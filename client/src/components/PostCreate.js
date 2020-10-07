@@ -11,7 +11,7 @@ const FORM_TEXT_FIELDS = [
   { id: 3, name: "websiteURL" },
 ];
 
-function PostCreate(props) {
+function PostCreate() {
   const [coverPhoto, setCoverPhoto] = useState();
   const [postDetails, setPostDetails] = useState({});
   const [createPost] = useMutation(CREATE_POST, {
@@ -49,7 +49,7 @@ function PostCreate(props) {
         required
         type="file"
         name="coverPhoto"
-        accept="image/*"
+        accept="image/jpeg, image/png"
         onChange={handleFileChange}
       />
       <button type="submit">Create New Post</button>
