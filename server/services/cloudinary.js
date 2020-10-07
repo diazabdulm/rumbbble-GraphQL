@@ -6,24 +6,16 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const uploadStream = (stream) => {
+module.exports.saveFileToCloudinary = (readable) => {
   return new Promise((resolve, reject) => {
-    const saveStream = cloudinary.uploader.upload_stream((error, output) => {
+    const options = { allowed_formats: ["jpg", "png"] };
+
+    const callback = (error, image) => {
       if (error) reject(error);
-      resolve(output.secure_url);
-      console.log("output.secure_url", output.secure_url);
-    });
+      resolve(image.secure_url);
+    };
 
-    stream.pipe(saveStream);
+    const uploadStream = cloudinary.uploader.upload_stream(options, callback);
+    readable.pipe(uploadStream);
   });
-};
-
-module.exports.saveToCloudinary = async (stream) => {
-  const fileURL = await uploadStream(stream).catch((error) => {
-    throw Error(error);
-  });
-
-  console.log("fileURL", fileURL);
-
-  return fileURL;
 };
