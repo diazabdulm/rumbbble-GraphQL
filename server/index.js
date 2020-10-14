@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const compression = require("compression");
 const enforce = require("express-sslify");
 const { graphqlHTTP } = require("express-graphql");
-const { graphqlUploadExpress } = require("graphql-upload")
+const { graphqlUploadExpress } = require("graphql-upload");
 
 const server = express();
 const schema = require("./schema");

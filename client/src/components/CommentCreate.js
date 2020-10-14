@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
+import { GET_USER } from "actions/userActions";
 import { CREATE_COMMENT, GET_COMMENTS } from "actions/commentActions";
 
 function CommentCreate({ post }) {
@@ -8,6 +9,8 @@ function CommentCreate({ post }) {
   const [createComment] = useMutation(CREATE_COMMENT, {
     refetchQueries: [{ query: GET_COMMENTS, variables: { post } }],
   });
+
+  const { loading, error, data } = useQuery(GET_USER);
 
   const handleChange = (event) => {
     setContent(event.target.value);
@@ -18,6 +21,10 @@ function CommentCreate({ post }) {
     createComment({ variables: { post, content } });
     setContent("");
   };
+
+  if (loading) return "Loading...";
+  if (error) throw Error(error.message);
+  if (!data.user) return null;
 
   return (
     <form onSubmit={handleSubmit}>
