@@ -19,7 +19,7 @@ npm run dev
 ## Built With These Major Technologies
 
 - React
-- Redux
+- Apollo Client
 - MongoDB
 - Express
 - GraphQL
