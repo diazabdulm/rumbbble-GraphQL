@@ -12,6 +12,10 @@ function CommentCreate({ post }) {
 
   const { loading, error, data } = useQuery(GET_USER);
 
+  if (loading) return "Loading...";
+  if (error) throw Error(error.message);
+  if (!data.user) return null;
+
   const handleChange = (event) => {
     setContent(event.target.value);
   };
@@ -21,10 +25,6 @@ function CommentCreate({ post }) {
     createComment({ variables: { post, content } });
     setContent("");
   };
-
-  if (loading) return "Loading...";
-  if (error) throw Error(error.message);
-  if (!data.user) return null;
 
   return (
     <form onSubmit={handleSubmit}>
