@@ -1,11 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
+import { GET_USER } from "actions/userActions";
 import { LIKE_POST } from "actions/likeActions";
 
 function PostListItem(props) {
+  const { loading, error, data } = useQuery(GET_USER);
   const [likePost] = useMutation(LIKE_POST);
+
+  if (loading) return "Loading...";
+  if (error) throw Error(error.message);
 
   const handleClick = () => {
     likePost({
@@ -23,6 +28,10 @@ function PostListItem(props) {
     });
   };
 
+  const renderLikeButton = data.user && (
+    <button onClick={handleClick}>Like</button>
+  );
+
   return (
     <article>
       <Link to={`/posts/${props.id}`}>
@@ -33,7 +42,7 @@ function PostListItem(props) {
           <p>{props.author.name}</p>
         </div>
       </Link>
-      <button onClick={handleClick}>Like</button>
+      {renderLikeButton}
       <span>{props.numLikes}</span>
     </article>
   );
