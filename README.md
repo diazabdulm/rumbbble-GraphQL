@@ -20,6 +20,6 @@ npm run dev
 
 - React
 - Apollo Client
-- MongoDB
-- Express
 - GraphQL
+- Express
+- MongoDB
