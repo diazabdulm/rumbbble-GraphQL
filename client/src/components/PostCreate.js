@@ -8,11 +8,11 @@ const FORM_TEXT_FIELDS = [
   { id: 0, name: "title" },
   { id: 1, name: "description" },
   { id: 2, name: "repoURL" },
-  { id: 3, name: "websiteURL" },
+  { id: 3, name: "demoURL" },
 ];
 
 function PostCreate({ history }) {
-  const [coverPhoto, setCoverPhoto] = useState();
+  const [thumbnail, setthumbnail] = useState();
   const [postDetails, setPostDetails] = useState({});
   const [createPost] = useMutation(CREATE_POST, {
     refetchQueries: [{ query: GET_POSTS }],
@@ -31,12 +31,12 @@ function PostCreate({ history }) {
       target: { validity },
     } = event;
     if (!validity.valid) throw Error("file not valid");
-    setCoverPhoto(event.target.files[0]);
+    setthumbnail(event.target.files[0]);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createPost({ variables: { ...postDetails, coverPhoto } });
+    createPost({ variables: { ...postDetails, thumbnail } });
   };
 
   const renderTextFields = FORM_TEXT_FIELDS.map(({ id, name }) => (
@@ -49,7 +49,7 @@ function PostCreate({ history }) {
       <input
         required
         type="file"
-        name="coverPhoto"
+        name="thumbnail"
         accept="image/jpeg, image/png"
         onChange={handleFileChange}
       />

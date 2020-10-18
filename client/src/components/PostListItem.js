@@ -35,7 +35,7 @@ function PostListItem(props) {
   return (
     <article>
       <Link to={`/posts/${props.id}`}>
-        <img src={props.coverPhoto} alt="" />
+        <img src={props.thumbnail} alt="" />
         <h1>{props.title}</h1>
         <div>
           <img src={props.author.avatarURL} alt="" />

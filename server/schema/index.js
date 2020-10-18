@@ -13,6 +13,8 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
 const Like = require("../models/Like");
+
+const { getFirstThumbnail } = require("../services/metascraper");
 const { saveFileToCloudinary } = require("../services/cloudinary");
 
 const UserType = new GraphQLObjectType({
@@ -47,8 +49,8 @@ const PostType = new GraphQLObjectType({
     title: { type: GraphQLString },
     description: { type: GraphQLString },
     repoURL: { type: GraphQLString },
-    websiteURL: { type: GraphQLString },
-    coverPhoto: { type: GraphQLString },
+    demoURL: { type: GraphQLString },
+    thumbnail: { type: GraphQLString },
     author: {
       type: UserType,
       resolve(parentValue, args, request) {
@@ -163,18 +165,14 @@ const mutation = new GraphQLObjectType({
         title: { type: GraphQLNonNull(GraphQLString) },
         description: { type: GraphQLNonNull(GraphQLString) },
         repoURL: { type: GraphQLNonNull(GraphQLString) },
-        websiteURL: { type: GraphQLNonNull(GraphQLString) },
-        coverPhoto: { type: GraphQLNonNull(GraphQLUpload) },
+        demoURL: { type: GraphQLNonNull(GraphQLString) },
       },
       async resolve(parentValue, args, request) {
-        const { createReadStream } = await args.coverPhoto;
-        const coverPhotoStream = createReadStream();
-        const coverPhotoURL = await saveFileToCloudinary(coverPhotoStream);
-
+        const thumbnail = await getFirstThumbnail([demoURL, repoURL]);
         return Post.create({
           ...args,
+          thumbnail,
           author: request.user.id,
-          coverPhoto: coverPhotoURL,
         });
       },
     },
@@ -185,8 +183,8 @@ const mutation = new GraphQLObjectType({
         title: { type: GraphQLString },
         description: { type: GraphQLString },
         repoURL: { type: GraphQLString },
-        websiteURL: { type: GraphQLString },
-        coverPhoto: { type: GraphQLString },
+        demoURL: { type: GraphQLString },
+        thumbnail: { type: GraphQLString },
       },
       resolve(parentValue, args, request) {
         const { id, ...restargs } = args;

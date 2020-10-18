@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.20.0",
     "cloudinary": "^1.23.0",
     "compression": "^1.7.4",
     "cookie-session": "^1.4.0",
@@ -19,10 +20,11 @@
     "express-sslify": "^1.2.0",
     "graphql": "^15.3.0",
     "graphql-upload": "^11.0.0",
+    "metascraper": "^5.14.17",
+    "metascraper-image": "^5.14.17",
     "mongoose": "^5.10.3",
     "passport": "^0.4.1",
-    "passport-github": "^1.1.0",
-    "unfurl.js": "^5.1.0"
+    "passport-github": "^1.1.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
