@@ -7,8 +7,8 @@ import { CREATE_POST, GET_POSTS } from "actions/postActions";
 const FORM_TEXT_FIELDS = [
   { id: 0, name: "title" },
   { id: 1, name: "description" },
-  { id: 2, name: "repoURL" },
-  { id: 3, name: "demoURL" },
+  { id: 2, name: "repositoryURL" },
+  { id: 3, name: "projectURL" },
 ];
 
 function PostCreate({ history }) {

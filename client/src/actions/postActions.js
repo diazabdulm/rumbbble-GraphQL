@@ -22,8 +22,8 @@ export const GET_POST = gql`
       id
       title
       description
-      repoURL
-      demoURL
+      repositoryURL
+      projectURL
       thumbnail
       numLikes
     }
@@ -34,15 +34,15 @@ export const CREATE_POST = gql`
   mutation createPost(
     $title: String!
     $description: String!
-    $repoURL: String!
-    $demoURL: String!
+    $repositoryURL: String!
+    $projectURL: String!
     $thumbnail: Upload!
   ) {
     createPost(
       title: $title
       description: $description
-      repoURL: $repoURL
-      demoURL: $demoURL
+      repositoryURL: $repositoryURL
+      projectURL: $projectURL
       thumbnail: $thumbnail
     ) {
       id

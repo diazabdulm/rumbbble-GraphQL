@@ -3,8 +3,8 @@ const { Schema, model } = require("mongoose");
 const Post = new Schema({
   title: String,
   description: String,
-  repoURL: String,
-  demoURL: String,
+  repositoryURL: String,
+  projectURL: String,
   thumbnail: String,
   author: {
     type: Schema.Types.ObjectId,

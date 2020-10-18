@@ -48,8 +48,8 @@ const PostType = new GraphQLObjectType({
     id: { type: GraphQLID },
     title: { type: GraphQLString },
     description: { type: GraphQLString },
-    repoURL: { type: GraphQLString },
-    demoURL: { type: GraphQLString },
+    repositoryURL: { type: GraphQLString },
+    projectURL: { type: GraphQLString },
     thumbnail: { type: GraphQLString },
     author: {
       type: UserType,
@@ -164,11 +164,11 @@ const mutation = new GraphQLObjectType({
       args: {
         title: { type: GraphQLNonNull(GraphQLString) },
         description: { type: GraphQLNonNull(GraphQLString) },
-        repoURL: { type: GraphQLNonNull(GraphQLString) },
-        demoURL: { type: GraphQLNonNull(GraphQLString) },
+        repositoryURL: { type: GraphQLNonNull(GraphQLString) },
+        projectURL: { type: GraphQLNonNull(GraphQLString) },
       },
       async resolve(parentValue, args, request) {
-        const thumbnail = await getFirstThumbnail([demoURL, repoURL]);
+        const thumbnail = await getFirstThumbnail([projectURL, repositoryURL]);
         return Post.create({
           ...args,
           thumbnail,
@@ -182,8 +182,8 @@ const mutation = new GraphQLObjectType({
         id: { type: GraphQLNonNull(GraphQLID) },
         title: { type: GraphQLString },
         description: { type: GraphQLString },
-        repoURL: { type: GraphQLString },
-        demoURL: { type: GraphQLString },
+        repositoryURL: { type: GraphQLString },
+        projectURL: { type: GraphQLString },
         thumbnail: { type: GraphQLString },
       },
       resolve(parentValue, args, request) {

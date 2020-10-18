@@ -21,8 +21,8 @@ function PostDetail({ match }) {
       <img src={post.thumbnail} alt="" />
       <h1>{post.title}</h1>
       <p>{post.description}</p>
-      <a href={post.repoURL}>Visit repository</a>
-      <a href={post.demoURL}>Visit website</a>
+      <a href={post.repositoryURL}>Visit repository</a>
+      <a href={post.projectURL}>Visit website</a>
       <CommentList post={post.id} />
       <CommentCreate post={post.id} />
     </article>
