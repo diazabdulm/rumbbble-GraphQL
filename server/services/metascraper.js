@@ -1,14 +1,10 @@
 const metascraper = require("metascraper")([require("metascraper-image")()]);
 const axios = require("axios");
 
-module.exports = getFirstThumbnail = (urls) => {
-  let thumbnail;
-
-  urls.find(async (url) => {
+module.exports.getFirstThumbnail = async (urls) => {
+  for (const url of urls) {
     const { data: html } = await axios(url);
-    const { image } = metascraper({ html, url });
-    return image && (thumbnail = image);
-  });
-
-  return thumbnail;
+    const { image } = await metascraper({ html, url });
+    if (image) return image;
+  }
 };

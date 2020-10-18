@@ -168,7 +168,11 @@ const mutation = new GraphQLObjectType({
         projectURL: { type: GraphQLNonNull(GraphQLString) },
       },
       async resolve(parentValue, args, request) {
-        const thumbnail = await getFirstThumbnail([projectURL, repositoryURL]);
+        const thumbnail = await getFirstThumbnail([
+          args.projectURL,
+          args.repositoryURL,
+        ]);
+
         return Post.create({
           ...args,
           thumbnail,
@@ -187,8 +191,8 @@ const mutation = new GraphQLObjectType({
         thumbnail: { type: GraphQLString },
       },
       resolve(parentValue, args, request) {
-        const { id, ...restargs } = args;
-        return Post.findByIdAndUpdate(id, { ...restargs }, { new: true });
+        const { id, ...restArgs } = args;
+        return Post.findByIdAndUpdate(id, { ...restArgs }, { new: true });
       },
     },
     deletePost: {

@@ -40,19 +40,29 @@ function PostCreate({ history }) {
   };
 
   const renderTextFields = FORM_TEXT_FIELDS.map(({ id, name }) => (
-    <input required type="text" key={id} name={name} onChange={handleChange} />
+    <>
+      <label for={name}>{name}</label>
+      <input
+        required
+        type="text"
+        key={id}
+        id={name}
+        name={name}
+        onChange={handleChange}
+      />
+    </>
   ));
 
   return (
     <form encType="multipart/form-data" onSubmit={handleSubmit}>
       {renderTextFields}
-      <input
+      {/* <input
         required
         type="file"
         name="thumbnail"
         accept="image/jpeg, image/png"
         onChange={handleFileChange}
-      />
+      /> */}
       <button type="submit">Create New Post</button>
     </form>
   );
