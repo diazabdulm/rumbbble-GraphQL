@@ -7,7 +7,6 @@ const {
   GraphQLInt,
   GraphQLID,
 } = require("graphql");
-const { GraphQLUpload } = require("graphql-upload");
 
 const User = require("../models/User");
 const Post = require("../models/Post");
@@ -15,7 +14,6 @@ const Comment = require("../models/Comment");
 const Like = require("../models/Like");
 
 const { getFirstThumbnail } = require("../services/metascraper");
-const { saveFileToCloudinary } = require("../services/cloudinary");
 
 const UserType = new GraphQLObjectType({
   name: "User",

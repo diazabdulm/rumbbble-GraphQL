@@ -4,7 +4,8 @@ const axios = require("axios");
 module.exports.getFirstThumbnail = async (urls) => {
   for (const url of urls) {
     const { data: html } = await axios(url);
-    const { image } = await metascraper({ html, url });
-    if (image) return image;
+    const { thumbnail } = await metascraper({ html, url });
+
+    if (thumbnail) return thumbnail;
   }
 };
