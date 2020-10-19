@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
+import PostImage from "components/PostImage";
+
 import { GET_USER } from "actions/userActions";
 import { LIKE_POST } from "actions/likeActions";
 
@@ -35,7 +37,7 @@ function PostListItem(props) {
   return (
     <article>
       <Link to={`/posts/${props.id}`}>
-        <img src={props.thumbnail} alt="" />
+        <PostImage thumbnailURL={props.thumbnail} />
         <h1>{props.title}</h1>
         <div>
           <img src={props.author.avatarURL} alt="" />
