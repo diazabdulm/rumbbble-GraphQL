@@ -1,24 +1,18 @@
-import { useRef, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
 import PostListItem from "components/PostListItem";
+import ScrollToBottom from "./ScrollToBottom";
+
 import { GET_POSTS } from "actions/postActions";
 
 function PostList() {
-  const infiniteLoadingElement = useRef(null);
   const { loading, error, data } = useQuery(GET_POSTS);
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      // alert("boogie man");
-    });
-  }, []);
 
   if (loading) return null;
   if (error) throw Error(error.message);
 
-  const handleScroll = (event) => {
-    // alert("scrolled");
+  const loadMorePosts = () => {
+    console.log("loading...");
   };
 
   const renderPosts = data.posts.map((post) => (
@@ -28,7 +22,7 @@ function PostList() {
   return (
     <main>
       {renderPosts}
-      <div ref={infiniteLoadingElement} />
+      <ScrollToBottom callback={loadMorePosts} />
     </main>
   );
 }
