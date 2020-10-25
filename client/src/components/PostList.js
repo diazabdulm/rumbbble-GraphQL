@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
 import PostListItem from "components/PostListItem";

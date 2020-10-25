@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import placeholderImage from "assets/placeholder-image.png";
 
 function PostImage({ thumbnailURL }) {
