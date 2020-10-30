@@ -1,7 +1,7 @@
 import { useState, Fragment } from "react";
 import { useMutation } from "@apollo/client";
 
-import withRequireAuth from "./RequireAuth";
+import withRequireAuth from "components/RequireAuth";
 import { CREATE_POST, GET_POSTS } from "actions/postActions";
 
 const FORM_FIELDS = [
