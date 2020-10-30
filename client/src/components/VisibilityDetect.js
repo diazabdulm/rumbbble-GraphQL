@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
-function ScrollToBottom({ callback }) {
-  const bottomDiv = useRef(null);
+function VisibilityDetect({ callback }) {
+  const element = useRef(null);
 
   useEffect(() => {
     const handleIntersection = ([{ isIntersecting }]) => {
@@ -9,12 +9,12 @@ function ScrollToBottom({ callback }) {
     };
 
     const observer = new IntersectionObserver(handleIntersection);
-    observer.observe(bottomDiv.current);
+    observer.observe(element.current);
 
     return () => observer.disconnect();
   }, [callback]);
 
-  return <div ref={bottomDiv} />;
+  return <div ref={element} />;
 }
 
-export default ScrollToBottom;
+export default VisibilityDetect;

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useQuery } from "@apollo/client";
 
 import PostListItem from "components/PostListItem";
-import ScrollToBottom from "./ScrollToBottom";
+import VisibilityDetect from "components/VisibilityDetect";
 
 import { GET_POSTS } from "actions/postActions";
 
@@ -23,7 +23,7 @@ function PostList() {
   return (
     <main>
       {renderPosts}
-      <ScrollToBottom callback={loadMorePosts} />
+      <VisibilityDetect callback={loadMorePosts} />
     </main>
   );
 }
