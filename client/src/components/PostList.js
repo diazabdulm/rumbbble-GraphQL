@@ -7,11 +7,14 @@ import VisibilityDetect from "components/VisibilityDetect";
 import { GET_POSTS } from "actions/postActions";
 
 function PostList() {
-  const { loading, error, data } = useQuery(GET_POSTS);
+  const { loading, error, data, fetchMore } = useQuery(GET_POSTS);
 
   const loadMorePosts = useCallback(() => {
-    console.log("loading...");
-  }, []);
+    const { posts } = data;
+    const { id } = posts[posts.length - 1];
+    
+    fetchMore({ variables: { lastPostID: id } });
+  }, [data, fetchMore]);
 
   if (loading) return null;
   if (error) throw Error(error.message);
