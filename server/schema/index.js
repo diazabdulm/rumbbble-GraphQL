@@ -128,7 +128,7 @@ const query = new GraphQLObjectType({
       type: GraphQLList(PostType),
       args: { lastPostID: { type: GraphQLID } },
       resolve(parentValue, args, request) {
-        const postsPerPage = 3;
+        const postsPerPage = 20;
 
         if (args.lastPostID) {
           return Post
