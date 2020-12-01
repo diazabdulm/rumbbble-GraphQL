@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_POSTS = gql`
-  query {
-    posts {
+  query GET_POSTS($lastPostID: ID) {
+    posts(lastPostID: $lastPostID) {
       id
       title
       thumbnail

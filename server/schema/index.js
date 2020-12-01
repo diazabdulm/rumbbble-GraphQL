@@ -126,8 +126,18 @@ const query = new GraphQLObjectType({
     },
     posts: {
       type: GraphQLList(PostType),
+      args: { lastPostID: { type: GraphQLID } },
       resolve(parentValue, args, request) {
-        return Post.find().limit(20).sort({ _id: -1 }).exec();
+        const postsPerPage = 3;
+
+        if (args.lastPostID) {
+          return Post
+            .find({ _id: { $lt: args.lastPostID } })
+            .limit(postsPerPage)
+            .sort({ _id: -1 });
+        }
+
+        return Post.find().limit(postsPerPage).sort({ _id: -1 });
       },
     },
     comment: {
