@@ -6,11 +6,10 @@ import PostList from "components/PostList";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    // padding: theme.spacing(3.5),
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(0, 3.5),
+    padding: theme.spacing(2.8, 0),
   },
 }));
 

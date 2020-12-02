@@ -2,13 +2,21 @@ import { Fragment } from "react";
 import {
   makeStyles,
   Avatar,
+  Button,
   Drawer,
   Hidden,
   List,
   ListItem,
-  ListItemAvatar,
-  TypoItemText,graphy,
+  ListItemIcon,
+  ListItemText,
+  Typography,
 } from "@material-ui/core";
+import {
+  HomeRounded,
+  ChatOutlined,
+  ChromeReaderModeOutlined,
+  SearchOutlined,
+} from "@material-ui/icons";
 
 const drawerWidth = "24.4rem";
 const avatarPlaceholder = "https://identicons.github.com/diazabdulm.png";
@@ -32,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1.4),
   },
   username: {
-    fontWeight: 600,
+    fontWeight: 700,
     fontSize: "2rem",
     lineHeight: "1.5rem",
     letterSpacing: "-0.005em",
@@ -40,11 +48,54 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1.2),
   },
   githubHandle: {
-    fontWeight: 500,
-    fontSize: "1.4rem",
+    fontWeight: 600,
+    fontSize: "1.3rem",
     lineHeight: "1.1rem",
-    letterSpacing: "-0.015em",
+    letterSpacing: "0.01em",
     marginBottom: theme.spacing(3.4),
+  },
+  menu: {
+    marginBottom: theme.spacing(2.6),
+  },
+  menuItem: {
+    padding: theme.spacing(0.9),
+    margin: theme.spacing(0.8, 0),
+    "&:first-child": {
+      marginTop: 0,
+    },
+    "&:last-child": {
+      marginBottom: 0,
+    },
+    "&:hover": {
+      borderRadius: "0.4rem",
+    },
+  },
+  menuItemIconContainer: {
+    minWidth: "3.4rem",
+    minHeight: "2.4rem",
+    display: "flex",
+    alignItems: "center",
+  },
+  menuItemIcon: {
+    fontSize: "2rem",
+  },
+  menuItemSelected: {
+    borderRadius: "0.4rem",
+  },
+  menuItemTextContainer: {
+    margin: 0,
+  },
+  menuItemTextPrimary: {
+    fontWeight: 700,
+    fontSize: "1.6rem",
+    lineHeight: "1.2rem",
+  },
+  button: {
+    fontWeight: 700,
+    fontSize: "1.2rem",
+    letterSpacing: "0.02em",
+    padding: "1.6rem 4.5rem",
+    lineHeight: "1.1rem",
   },
 }));
 
@@ -60,8 +111,62 @@ function Navigation() {
       <Typography variant="subtitle1" className={classes.githubHandle}>
         @yourgithubhandle
       </Typography>
-      <List>
+      <List disablePadding className={classes.menu}>
+        <ListItem
+          button
+          selected={true}
+          className={classes.menuItem}
+          classes={{ selected: classes.menuItemSelected }}
+        >
+          <ListItemIcon className={classes.menuItemIconContainer}>
+            <HomeRounded className={classes.menuItemIcon} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Home Feed"
+            className={classes.menuItemTextContainer}
+            primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
+          />
+        </ListItem>
+        <ListItem button className={classes.menuItem}>
+          <ListItemIcon className={classes.menuItemIconContainer}>
+            <ChatOutlined className={classes.menuItemIcon} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Messages"
+            className={classes.menuItemTextContainer}
+            primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
+          />
+        </ListItem>
+        <ListItem button className={classes.menuItem}>
+          <ListItemIcon className={classes.menuItemIconContainer}>
+            <ChromeReaderModeOutlined className={classes.menuItemIcon} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Articles"
+            className={classes.menuItemTextContainer}
+            primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
+          />
+        </ListItem>
+        <ListItem button className={classes.menuItem}>
+          <ListItemIcon className={classes.menuItemIconContainer}>
+            <SearchOutlined className={classes.menuItemIcon} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Search"
+            className={classes.menuItemTextContainer}
+            primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
+          />
+        </ListItem>
       </List>
+      <Button
+        fullWidth
+        disableElevation
+        variant="contained"
+        color="primary"
+        className={classes.button}
+      >
+        Create Post
+      </Button>
     </Fragment>
   );
 
@@ -80,5 +185,4 @@ function Navigation() {
   );
 }
 
-export default Navigation;
 export default Navigation;
