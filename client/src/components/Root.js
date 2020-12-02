@@ -27,7 +27,18 @@ const cache = new InMemoryCache({
 const client = new ApolloClient({ cache, link });
 
 const theme = createMuiTheme({
+  spacing: (factor) => `${factor}rem`,
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        html: {
+          fontSize: "62.5%",
+        },
+      },
+    },
+  },
   typography: {
+    htmlFontSize: 10,
     fontFamily: [
       "Inter",
       "-apple-system",

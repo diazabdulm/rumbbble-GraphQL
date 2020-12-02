@@ -1,22 +1,30 @@
-import { Fragment } from "react";
-import { Switch, Route } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
 
-import Header from "components/Header";
-
+import Navigation from "components/Navigation";
 import PostList from "components/PostList";
-import PostDetail from "components/PostDetail";
-import PostCreate from "components/PostCreate";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    // padding: theme.spacing(3.5),
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(0, 3.5),
+  },
+}));
 
 function App() {
+  const classes = useStyles();
+
   return (
-    <Fragment>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={PostList} />
-        <Route exact path="/posts/new" component={PostCreate} />
-        <Route exact path="/posts/:id" component={PostDetail} />
-      </Switch>
-    </Fragment>
+    <div className={classes.root}>
+      <Navigation />
+      <main className={classes.content}>
+        <PostList />
+      </main>
+      <aside></aside>
+    </div>
   );
 }
 
