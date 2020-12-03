@@ -6,7 +6,6 @@ export const GET_POSTS = gql`
       id
       title
       thumbnail
-      numLikes
       author {
         id
         name
@@ -25,7 +24,6 @@ export const GET_POST = gql`
       repositoryURL
       projectURL
       thumbnail
-      numLikes
     }
   }
 `;

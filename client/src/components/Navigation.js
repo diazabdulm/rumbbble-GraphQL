@@ -7,6 +7,7 @@ import {
   Hidden,
   List,
   ListItem,
+  ListItemAvatar,
   ListItemIcon,
   ListItemText,
   Typography,
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     width: theme.spacing(5.3),
-    height: theme.spacing(5.3),
+    height: "auto",
     marginBottom: theme.spacing(1.4),
   },
   username: {
@@ -44,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "2rem",
     lineHeight: "1.5rem",
     letterSpacing: "-0.005em",
-    color: theme.palette.text.primary,
     marginBottom: theme.spacing(1.2),
   },
   githubHandle: {
@@ -97,6 +97,9 @@ const useStyles = makeStyles((theme) => ({
     padding: "1.6rem 4.5rem",
     lineHeight: "1.1rem",
   },
+  logoContainer: {
+    marginTop: "auto",
+  },
 }));
 
 function Navigation() {
@@ -105,10 +108,14 @@ function Navigation() {
   const drawer = (
     <Fragment>
       <Avatar alt="" src={avatarPlaceholder} className={classes.avatar} />
-      <Typography variant="h6" className={classes.username}>
+      <Typography variant="h6" color="textPrimary" className={classes.username}>
         Your Username
       </Typography>
-      <Typography variant="subtitle1" className={classes.githubHandle}>
+      <Typography
+        variant="subtitle1"
+        color="textSecondary"
+        className={classes.githubHandle}
+      >
         @yourgithubhandle
       </Typography>
       <List disablePadding className={classes.menu}>
@@ -167,6 +174,18 @@ function Navigation() {
       >
         Create Post
       </Button>
+      <List disablePadding className={classes.logoContainer}>
+        <ListItem disableGutters>
+          <ListItemAvatar>
+            <Avatar>R</Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="rumbbble"
+            className={classes.menuItemTextContainer}
+            primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
+          />
+        </ListItem>
+      </List>
     </Fragment>
   );
 

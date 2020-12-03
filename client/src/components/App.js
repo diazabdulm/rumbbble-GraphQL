@@ -22,7 +22,7 @@ function App() {
       <main className={classes.content}>
         <PostList />
       </main>
-      <aside></aside>
+      <aside style={{ width: 300 }}></aside>
     </div>
   );
 }

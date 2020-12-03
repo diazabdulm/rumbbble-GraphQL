@@ -28,6 +28,9 @@ const client = new ApolloClient({ cache, link });
 
 const theme = createMuiTheme({
   spacing: (factor) => `${factor}rem`,
+  palette: {
+    type: "dark",
+  },
   overrides: {
     MuiCssBaseline: {
       "@global": {

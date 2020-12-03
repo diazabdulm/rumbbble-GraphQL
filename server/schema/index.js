@@ -61,12 +61,6 @@ const PostType = new GraphQLObjectType({
         return Comment.find({ post: parentValue.id });
       },
     },
-    numLikes: {
-      type: GraphQLInt,
-      resolve(parentValue, args, request) {
-        return Like.find({ post: parentValue.id }).countDocuments();
-      },
-    },
   }),
 });
 
@@ -131,8 +125,7 @@ const query = new GraphQLObjectType({
         const postsPerPage = 20;
 
         if (args.lastPostID) {
-          return Post
-            .find({ _id: { $lt: args.lastPostID } })
+          return Post.find({ _id: { $lt: args.lastPostID } })
             .limit(postsPerPage)
             .sort({ _id: -1 });
         }
