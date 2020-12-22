@@ -14,8 +14,11 @@ import {
   CommentOutlined,
   MoreVert,
   ThumbUpOutlined,
+  ThumbUp,
   ShareOutlined,
 } from "@material-ui/icons";
+
+import CommentList from "components/CommentList";
 
 import { GET_USER } from "actions/userActions";
 import { LIKE_POST } from "actions/likeActions";
@@ -28,22 +31,49 @@ const useStyles = makeStyles((theme) => ({
   },
   cardHeader: {
     padding: 0,
+    marginBottom: "2.6rem",
+  },
+  cardHeaderAvatar: {
+    marginRight: "1.4rem",
+  },
+  cardHeaderAction: {
+    margin: 0,
+  },
+  cardSubheader: {
+    fontWeight: 500,
+    lineHeight: "1.3rem",
+    fontSize: "1.1rem",
+    letterSpacing: "-0.015em",
   },
   avatar: {
     width: "4.3rem",
     height: "auto",
-    marginRight: "1.4rem",
   },
   authorName: {
     fontWeight: 600,
     fontSize: "1.3rem",
     letterSpacing: "0.012em",
-    lineHeight: "1.1rem",
+    lineHeight: "1.2rem",
     color: theme.palette.text.primary,
+    marginBottom: "0.8rem",
   },
   shareButton: {
     marginLeft: "auto",
   },
+  cardContent: {
+    padding: 0,
+    marginBottom: "2.1rem",
+  },
+  cardActions: {
+    padding: 0,
+    marginBottom: "1.4rem",
+  },
+  iconButton: {
+    fontSize: "2rem",
+  },
+  // divider: {
+  //   margin: 0,
+  // },
 }));
 
 function PostListItem(props) {
@@ -73,19 +103,19 @@ function PostListItem(props) {
 
   const likeButton = (
     <IconButton aria-label="like post" onClick={handleLikePost}>
-      <ThumbUpOutlined />
+      <ThumbUp className={classes.iconButton} />
     </IconButton>
   );
 
   const commentButton = (
     <IconButton aria-label="view comments">
-      <CommentOutlined />
+      <CommentOutlined className={classes.iconButton} />
     </IconButton>
   );
 
   const shareButton = (
     <IconButton aria-label="share post" className={classes.shareButton}>
-      <ShareOutlined />
+      <ShareOutlined className={classes.iconButton} />
     </IconButton>
   );
 
@@ -100,26 +130,35 @@ function PostListItem(props) {
           />
         }
         action={
-          <IconButton aria-label="post settings">
-            <MoreVert />
+          <IconButton
+            aria-label="post settings"
+            className={classes.cardHeaderAction}
+          >
+            <MoreVert className={classes.iconButton} />
           </IconButton>
         }
         title={props.author.name}
         subheader={"testing"}
         className={classes.cardHeader}
         titleTypographyProps={{ className: classes.authorName }}
+        subheaderTypographyProps={{ className: classes.cardSubheader }}
+        classes={{
+          action: classes.cardHeaderAction,
+          avatar: classes.cardHeaderAvatar,
+        }}
       />
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <Typography variant="body2" color="textPrimary">
           {props.title}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing className={classes.cardActions}>
         {likeButton}
         {commentButton}
         {shareButton}
       </CardActions>
-      <Divider variant="middle" />
+      <Divider className={classes.divider} />
+      <CommentList post={props.id} />
     </Card>
   );
 }

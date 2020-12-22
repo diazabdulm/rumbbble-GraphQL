@@ -86,9 +86,10 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
   },
   menuItemTextPrimary: {
-    fontWeight: 700,
+    fontWeight: 600,
     fontSize: "1.6rem",
     lineHeight: "1.2rem",
+    letterSpacing: "0.0035em",
   },
   button: {
     fontWeight: 700,

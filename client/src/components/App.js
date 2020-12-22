@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(2.8, 0),
   },
+  aside: {
+    flex: "0 0 311px",
+  },
 }));
 
 function App() {
@@ -22,7 +25,7 @@ function App() {
       <main className={classes.content}>
         <PostList />
       </main>
-      <aside style={{ width: 300 }}></aside>
+      <aside className={classes.aside}></aside>
     </div>
   );
 }
