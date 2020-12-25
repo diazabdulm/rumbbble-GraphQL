@@ -1,30 +1,23 @@
 import { useMutation, useQuery } from "@apollo/client";
 import {
   makeStyles,
-  Avatar,
   Card,
-  CardHeader,
   CardContent,
   CardActions,
   Divider,
   IconButton,
   Typography,
 } from "@material-ui/core";
-import {
-  CommentOutlined,
-  MoreVert,
-  ThumbUpOutlined,
-  ThumbUp,
-  ShareOutlined,
-} from "@material-ui/icons";
+import { CommentOutlined, ThumbUp, ShareOutlined } from "@material-ui/icons";
 
+import PostListItemHeader from "components/PostListItemHeader";
 import CommentList from "components/CommentList";
 
 import { GET_USER } from "actions/userActions";
 import { LIKE_POST } from "actions/likeActions";
 
 const useStyles = makeStyles((theme) => ({
-  card: {
+  root: {
     boxShadow: "none",
     marginBottom: "2.1rem",
     padding: "1.4rem 2.1rem",
@@ -120,33 +113,8 @@ function PostListItem(props) {
   );
 
   return (
-    <Card className={classes.card}>
-      <CardHeader
-        avatar={
-          <Avatar
-            aria-label="avatar"
-            src={props.author.avatarURL}
-            className={classes.avatar}
-          />
-        }
-        action={
-          <IconButton
-            aria-label="post settings"
-            className={classes.cardHeaderAction}
-          >
-            <MoreVert className={classes.iconButton} />
-          </IconButton>
-        }
-        title={props.author.name}
-        subheader={"testing"}
-        className={classes.cardHeader}
-        titleTypographyProps={{ className: classes.authorName }}
-        subheaderTypographyProps={{ className: classes.cardSubheader }}
-        classes={{
-          action: classes.cardHeaderAction,
-          avatar: classes.cardHeaderAvatar,
-        }}
-      />
+    <Card className={classes.root}>
+      <PostListItemHeader author={data.author} />
       <CardContent className={classes.cardContent}>
         <Typography variant="body2" color="textPrimary">
           {props.title}

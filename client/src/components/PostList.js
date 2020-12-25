@@ -11,8 +11,9 @@ function PostList() {
 
   const loadMorePosts = useCallback(() => {
     const { posts } = data;
+    if (!posts.length) return;
+
     const { id } = posts[posts.length - 1];
-    
     fetchMore({ variables: { lastPostID: id } });
   }, [data, fetchMore]);
 

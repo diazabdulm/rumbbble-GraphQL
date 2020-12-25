@@ -1,22 +1,36 @@
-import { useState, Fragment } from "react";
-import { useMutation } from "@apollo/client";
+import { useState } from "react";
+import { gql, useQuery, useMutation } from "@apollo/client";
+
+import { makeStyles, Avatar, Paper, TextField } from "@material-ui/core";
 
 import withRequireAuth from "components/RequireAuth";
 import { CREATE_POST, GET_POSTS } from "actions/postActions";
 
-const FORM_FIELDS = [
-  { id: 0, name: "title" },
-  { id: 1, name: "description" },
-  { id: 2, name: "repositoryURL" },
-  { id: 3, name: "projectURL" },
-];
+const GET_USER = gql`
+  query GetUser {
+    user {
+      name
+      avatarURL
+    }
+  }
+`;
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+}));
 
 function PostCreate({ history }) {
+  const classes = useStyles();
+  const { loading, error, data } = useQuery(GET_USER);
+
   const [postDetails, setPostDetails] = useState({});
+
   const [createPost] = useMutation(CREATE_POST, {
     refetchQueries: [{ query: GET_POSTS }],
-    onCompleted: () => history.push("/"),
   });
+
+  if (loading) return null;
+  if (error) return;
 
   const handleChange = (event) => {
     const {
@@ -30,25 +44,11 @@ function PostCreate({ history }) {
     createPost({ variables: { ...postDetails } });
   };
 
-  const renderFields = FORM_FIELDS.map(({ id, name }) => (
-    <Fragment>
-      <label for={name}>{name}</label>
-      <input
-        required
-        type="text"
-        key={id}
-        id={name}
-        name={name}
-        onChange={handleChange}
-      />
-    </Fragment>
-  ));
-
   return (
-    <form onSubmit={handleSubmit}>
-      {renderFields}
-      <button type="submit">Create New Post</button>
-    </form>
+    <Paper onSubmit={handleSubmit} className={classes.root}>
+      <Avatar />
+      <TextField onChange={handleChange} />
+    </Paper>
   );
 }
 
