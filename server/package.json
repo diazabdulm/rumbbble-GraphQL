@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node -r index.js",
+    "start": "node index.js",
     "start:dev": "nodemon -r dotenv/config index.js"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "passport-github": "^1.1.0"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6"
   }
 }

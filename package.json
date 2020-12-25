@@ -4,7 +4,8 @@
   "description": "The rumbbble project, built with a GraphQL backend",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run start:dev --prefix server\" \"npm start --prefix client\"",
+    "start": "npm start --prefix server",
+    "start:dev": "concurrently \"npm run start:dev --prefix server\" \"npm start --prefix client\"",
     "postinstall": "npm install --prefix server && npm install --prefix client"
   },
   "repository": {
@@ -20,5 +21,8 @@
   "homepage": "https://github.com/diazabdulm/rumbbble-GraphQL#readme",
   "devDependencies": {
     "concurrently": "^5.3.0"
+  },
+  "engines": {
+    "node": "15.x"
   }
 }
