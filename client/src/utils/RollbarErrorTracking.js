@@ -1,10 +1,13 @@
 import Rollbar from "rollbar";
 
+const NODE_ENV = "%NODE_ENV%";
+
 const ROLLBAR_CONFIG = {
-  accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
+  enabled: NODE_ENV === "production",
+  accessToken: "%REACT_APP_ROLLBAR_ACCESS_TOKEN%",
   captureUncaught: true,
   captureUnhandledRejections: true,
-  payload: { environment: process.env.NODE_ENV },
+  payload: { environment: NODE_ENV },
 };
 
 const rollbarInstance = new Rollbar(ROLLBAR_CONFIG);

@@ -1,7 +1,7 @@
-import { Component } from "react";
-import { logErrorInfo, logErrorInRollbar } from "utils/RollbarErrorTracking";
+import React from "react";
+import Rollbar from "utils/RollbarErrorTracking";
 
-class ErrorBoundary extends Component {
+class ErrorBoundary extends React.Component {
   state = { error: undefined };
 
   static getDerivedStateFromError(error) {
@@ -9,8 +9,8 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    logErrorInfo(errorInfo);
-    logErrorInRollbar(error);
+    Rollbar.logErrorInfo(errorInfo);
+    Rollbar.logErrorInRollbar(error);
   }
 
   renderErrorComponent = (

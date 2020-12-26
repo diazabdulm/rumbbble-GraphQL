@@ -6,6 +6,7 @@ import {
 } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 import { createMuiTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
+import ErrorBoundary from "./ErrorBoundary";
 
 const link = createHttpLink({ uri: "/graphql" });
 
@@ -64,7 +65,7 @@ function Root({ children }) {
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          {children}
+          <ErrorBoundary>{children}</ErrorBoundary>
         </ThemeProvider>
       </BrowserRouter>
     </ApolloProvider>
