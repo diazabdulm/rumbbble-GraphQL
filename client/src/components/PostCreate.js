@@ -46,7 +46,7 @@ function PostCreate({ history }) {
 
   return (
     <Paper onSubmit={handleSubmit} className={classes.root}>
-      <Avatar />
+      <Avatar src />
       <TextField onChange={handleChange} />
     </Paper>
   );

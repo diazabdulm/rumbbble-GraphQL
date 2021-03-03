@@ -7,7 +7,6 @@ import {
   Hidden,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemIcon,
   ListItemText,
   Typography,
@@ -25,8 +24,8 @@ const avatarPlaceholder = "https://identicons.github.com/diazabdulm.png";
 const useStyles = makeStyles((theme) => ({
   drawer: {
     [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
       flexShrink: 0,
+      width: drawerWidth,
     },
   },
   drawerPaper: {
@@ -36,39 +35,25 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2.8),
   },
   avatar: {
-    width: theme.spacing(5.3),
     height: "auto",
+    width: theme.spacing(5.3),
     marginBottom: theme.spacing(1.4),
   },
   username: {
     fontWeight: 700,
-    fontSize: "2rem",
-    lineHeight: "1.5rem",
-    letterSpacing: "-0.005em",
-    marginBottom: theme.spacing(1.2),
   },
   githubHandle: {
     fontWeight: 600,
     fontSize: "1.3rem",
     lineHeight: "1.1rem",
-    letterSpacing: "0.01em",
-    marginBottom: theme.spacing(3.4),
   },
   menu: {
-    marginBottom: theme.spacing(2.6),
+    margin: "3rem 0 1rem",
   },
   menuItem: {
     padding: theme.spacing(0.9),
     margin: theme.spacing(0.8, 0),
-    "&:first-child": {
-      marginTop: 0,
-    },
-    "&:last-child": {
-      marginBottom: 0,
-    },
-    "&:hover": {
-      borderRadius: "0.4rem",
-    },
+    borderRadius: "0.4rem",
   },
   menuItemIconContainer: {
     minWidth: "3.4rem",
@@ -78,9 +63,6 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItemIcon: {
     fontSize: "2rem",
-  },
-  menuItemSelected: {
-    borderRadius: "0.4rem",
   },
   menuItemTextContainer: {
     margin: 0,
@@ -106,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
 function Navigation() {
   const classes = useStyles();
 
-  const drawer = (
+  const renderHeader = (
     <Fragment>
       <Avatar alt="" src={avatarPlaceholder} className={classes.avatar} />
       <Typography variant="h6" color="textPrimary" className={classes.username}>
@@ -119,10 +101,28 @@ function Navigation() {
       >
         @yourgithubhandle
       </Typography>
+    </Fragment>
+  );
+
+  const renderMenuItems = [].map(() => (
+<ListItem button className={classes.menuItem}>
+          <ListItemIcon className={classes.menuItemIconContainer}>
+          <ChatOutlined className={classes.menuItemIcon} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Messages"
+            className={classes.menuItemTextContainer}
+            primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
+          />
+        </ListItem>
+  ));
+
+  const drawer = (
+    <Fragment>
       <List disablePadding className={classes.menu}>
         <ListItem
           button
-          selected={true}
+          selected
           className={classes.menuItem}
           classes={{ selected: classes.menuItemSelected }}
         >
@@ -135,16 +135,7 @@ function Navigation() {
             primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
           />
         </ListItem>
-        <ListItem button className={classes.menuItem}>
-          <ListItemIcon className={classes.menuItemIconContainer}>
-            <ChatOutlined className={classes.menuItemIcon} />
-          </ListItemIcon>
-          <ListItemText
-            primary="Messages"
-            className={classes.menuItemTextContainer}
-            primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
-          />
-        </ListItem>
+        
         <ListItem button className={classes.menuItem}>
           <ListItemIcon className={classes.menuItemIconContainer}>
             <ChromeReaderModeOutlined className={classes.menuItemIcon} />
@@ -175,20 +166,15 @@ function Navigation() {
       >
         Create Post
       </Button>
-      <List disablePadding className={classes.logoContainer}>
-        <ListItem disableGutters>
-          <ListItemAvatar>
-            <Avatar>R</Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="rumbbble"
-            className={classes.menuItemTextContainer}
-            primaryTypographyProps={{ className: classes.menuItemTextPrimary }}
-          />
-        </ListItem>
-      </List>
     </Fragment>
   );
+
+  const renderFooter = (
+    <div>
+      <Avatar>R</Avatar>
+      <Typography>rumbbble</Typography>
+    </div>
+  )
 
   return (
     <nav aria-label="global navigation" className={classes.drawer}>
@@ -198,7 +184,9 @@ function Navigation() {
           variant="permanent"
           classes={{ paper: classes.drawerPaper }}
         >
+          {renderHeader}
           {drawer}
+          {renderFooter}
         </Drawer>
       </Hidden>
     </nav>
