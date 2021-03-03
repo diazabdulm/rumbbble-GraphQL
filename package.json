@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm start --prefix server",
-    "start:dev": "concurrently \"npm run start:dev --prefix server\" \"npm start --prefix client\"",
+    "start:dev": "concurrently \"npm:start:dev --prefix server\" \"npm start --prefix client\"",
     "postinstall": "npm install --prefix server && npm install --prefix client"
   },
   "repository": {
